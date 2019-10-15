@@ -52,7 +52,7 @@ const GroupDate = styled.Text`
     font-weight: 600;
     font-size: 14px;
     width: 70px;
-    height: 32px;
+    height: 25px;
     text-align: center;
     line-height: 28px;
 `;
