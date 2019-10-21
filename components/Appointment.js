@@ -2,9 +2,10 @@ import React from 'react';
 import { View } from 'react-native';
 import styled from 'styled-components/native';
 
-const Group = ({ user, diagnosis, active, time }) => {
+const Group = ({ navigate, item }) => {
+    const { user, diagnosis, active, time } = item;
     return (
-        <GroupItem>
+        <GroupItem onPress={navigate.bind(this, 'Patient', item)}>
             <Avatar source={{ uri: user.avatar }} />
             <View style={{ flex: 1 }}>
                 <FullName>{user.fullname}</FullName>

@@ -1,46 +1,21 @@
 import React from 'react';
-import { SectionList} from 'react-native';
-import data from './data';
-import styled from 'styled-components/native';
-import Appointment from './components/Appointment';
-import SectionTitle from './components/SectionTitle';
-import { Ionicons } from '@expo/vector-icons';
+import HomeScreen from './screens/HomeScreen';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import PatientScreen from './screens/PatientScreen';
 
-export default function App() {
-	return (
-		<Container>
-			<SectionList
-				sections={data}
-				keyExtractor={(item, index) => index}
-				renderItem={({ item }) => <Appointment {...item} />}
-				renderSectionHeader={({ section: { title } }) => (
-					<SectionTitle title={title} />
-				)}
-			/>
-			<PlusButton>
-				<Ionicons name="ios-add" size={36} color="white" />
-			</PlusButton>
-		</Container>
-	);
-}
+const AppNavigator = createStackNavigator(
+	{
+		Home: {
+			screen: HomeScreen,
+		},
+		Patient: {
+			screen: PatientScreen,
+		},
+	},
+	{
+		initialRouteName: 'Home'
+	}
+);
 
-const Container = styled.View`
-  flex: 1;
-  margin-top: 30px;
-`;
-
-const PlusButton = styled.TouchableOpacity`
-	align-items: center;
-	justify-content: center;
-	border-radius: 50px;
-	width: 64px;
-	height: 64px;
-	background: #2a86ff;
-	position: absolute;
-	right: 25px;
-	bottom: 25px;
-	shadow-color: #2a86ff;
-	shadow-opacity: 0.7;
-	shadow-radius: 3.5;
-	elevation: 4;
-`;
+export default createAppContainer(AppNavigator);
