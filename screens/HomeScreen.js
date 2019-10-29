@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { SectionList } from 'react-native';
 import data from '../data';
 import styled from 'styled-components/native';
@@ -6,30 +6,36 @@ import Appointment from '../components/Appointment';
 import SectionTitle from '../components/SectionTitle';
 import { Ionicons } from '@expo/vector-icons';
 import Swipeable from 'react-native-swipeable-row';
+import { setProvidesAudioData } from 'expo/build/AR';
 
 const HomeScreen = ({ navigation }) => {
+
+    const [data, setData] = useState(null);
+
     return (
         <Container>
-            <SectionList
-                sections={data}
-                keyExtractor={(item, index) => index}
-                renderItem={({ item }) => (
-                    <Swipeable
-                        rightButtons={[
-                            <SwipeViewButton style={{ backgroundColor: '#b4c1cb' }}>
-                                <Ionicons name="md-create" size={28} color="white" />
-                            </SwipeViewButton>,
-                            <SwipeViewButton style={{ backgroundColor: '#f85a5a' }}>
-                                <Ionicons name="ios-close" size={28} color="white" />
-                            </SwipeViewButton>
-                        ]} >
-                        <Appointment navigate={navigation.navigate} item={item} />
-                    </Swipeable>
-                )}
-                renderSectionHeader={({ section: { title } }) => (
-                    <SectionTitle title={title} />
-                )}
-            />
+            {data &&
+                <SectionList
+                    sections={data}
+                    keyExtractor={(item, index) => index}
+                    renderItem={({ item }) => (
+                        <Swipeable
+                            rightButtons={[
+                                <SwipeViewButton style={{ backgroundColor: '#b4c1cb' }}>
+                                    <Ionicons name="md-create" size={28} color="white" />
+                                </SwipeViewButton>,
+                                <SwipeViewButton style={{ backgroundColor: '#f85a5a' }}>
+                                    <Ionicons name="ios-close" size={28} color="white" />
+                                </SwipeViewButton>
+                            ]} >
+                            <Appointment navigate={navigation.navigate} item={item} />
+                        </Swipeable>
+                    )}
+                    renderSectionHeader={({ section: { title } }) => (
+                        <SectionTitle title={title} />
+                    )}
+                />
+            }
             <PlusButton>
                 <Ionicons name="ios-add" size={36} color="white" />
             </PlusButton>
