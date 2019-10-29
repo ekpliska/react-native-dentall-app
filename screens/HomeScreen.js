@@ -6,7 +6,6 @@ import Appointment from '../components/Appointment';
 import SectionTitle from '../components/SectionTitle';
 import { Ionicons } from '@expo/vector-icons';
 import Swipeable from 'react-native-swipeable-row';
-import { setProvidesAudioData } from 'expo/build/AR';
 
 const HomeScreen = ({ navigation }) => {
 
