@@ -5,6 +5,7 @@ import styled from 'styled-components/native';
 import Appointment from '../components/Appointment';
 import SectionTitle from '../components/SectionTitle';
 import { Ionicons } from '@expo/vector-icons';
+import Swipeable from 'react-native-swipeable-row';
 
 const HomeScreen = ({ navigation }) => {
     return (
@@ -12,7 +13,19 @@ const HomeScreen = ({ navigation }) => {
             <SectionList
                 sections={data}
                 keyExtractor={(item, index) => index}
-                renderItem={({ item }) => <Appointment navigate={navigation.navigate} item={item} />}
+                renderItem={({ item }) => (
+                    <Swipeable
+                        rightButtons={[
+                            <SwipeViewButton style={{ backgroundColor: '#b4c1cb' }}>
+                                <Ionicons name="md-create" size={28} color="white" />
+                            </SwipeViewButton>,
+                            <SwipeViewButton style={{ backgroundColor: '#f85a5a' }}>
+                                <Ionicons name="ios-close" size={28} color="white" />
+                            </SwipeViewButton>
+                        ]} >
+                        <Appointment navigate={navigation.navigate} item={item} />
+                    </Swipeable>
+                )}
                 renderSectionHeader={({ section: { title } }) => (
                     <SectionTitle title={title} />
                 )}
@@ -52,6 +65,14 @@ const PlusButton = styled.TouchableOpacity`
 	shadow-opacity: 0.7;
 	shadow-radius: 5.5;
 	elevation: 10;
+`;
+
+const SwipeViewButton = styled.TouchableOpacity`
+    width: 75px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;
 
 export default HomeScreen;

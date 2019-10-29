@@ -4334,6 +4334,13 @@ react-native-safe-area-view@^0.14.1:
   dependencies:
     debounce "^1.2.0"
 
+react-native-swipeable-row@^0.8.1:
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/react-native-swipeable-row/-/react-native-swipeable-row-0.8.1.tgz#6076ab2568c36cd96bc73882470598cfac3b20c9"
+  integrity sha512-DMarMMIPihwIyOlYtym2VwzCUvciDefrb38JEMHvHXUwoKhWGQgfYoBi1csYYHeg/AawBr1Oel2W1rowV4ixUA==
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-view-shot@2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/react-native-view-shot/-/react-native-view-shot-2.6.0.tgz#3b23675826f67658366352c4b97b59a6aded2f43"
@@ -4410,10 +4417,10 @@ react-native-web@^0.11.7:
     xmldoc "^0.4.0"
     yargs "^9.0.0"
 
-react-navigation-stack@^1.10.2:
-  version "1.10.2"
-  resolved "https://registry.yarnpkg.com/react-navigation-stack/-/react-navigation-stack-1.10.2.tgz#86521ec876ce030b54073b89d31d3a1d82e6675b"
-  integrity sha512-dLyhLX0EM53grtsuzjl3azatCVr9ZdK/I/ZzW6c9GSqwXwFTJ+XL4z9kbIXoviMb9qXbLRpVhSR9eAlpsmPZUw==
+react-navigation-stack@^1.10.3:
+  version "1.10.3"
+  resolved "https://registry.yarnpkg.com/react-navigation-stack/-/react-navigation-stack-1.10.3.tgz#e714e442b20427f0d2d3c18fce1f9e8cfe69be0b"
+  integrity sha512-1gksFi/g/Lg9sBhgLlD0OiEB5xnatHb4C0eNMA5tli9cTVlhq375XNPIqOiTyftibBmjdApAsZFj5srUCoOu/w==
   dependencies:
     prop-types "^15.7.2"
 
