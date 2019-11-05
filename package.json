@@ -8,21 +8,37 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "axios": "^0.19.0",
     "expo": "^35.0.0",
+    "expo-constants": "^7.0.1",
+    "native-base": "^2.13.8",
     "react": "16.8.3",
     "react-dom": "16.8.3",
     "react-native": "https://github.com/expo/react-native/archive/sdk-35.0.0.tar.gz",
+    "react-native-datepicker": "^1.7.2",
     "react-native-gesture-handler": "~1.3.0",
     "react-native-reanimated": "~1.2.0",
-    "react-native-screens": "~1.0.0-alpha.23",
     "react-native-swipeable-row": "^0.8.1",
     "react-native-web": "^0.11.7",
     "react-navigation": "^4.0.10",
-    "react-navigation-stack": "^1.10.3",
+    "react-navigation-stack": "^1.9.4",
     "styled-components": "^4.4.0"
   },
   "devDependencies": {
     "babel-preset-expo": "^7.0.0"
   },
-  "private": true
+  "private": true,
+  "name": "dentall-app",
+  "description": "learning React Native",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ekpliska/react-native-dentall-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ekpliska/react-native-dentall-app/issues"
+  },
+  "homepage": "https://github.com/ekpliska/react-native-dentall-app#readme"
 }

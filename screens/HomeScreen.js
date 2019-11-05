@@ -7,9 +7,18 @@ import SectionTitle from '../components/SectionTitle';
 import { Ionicons } from '@expo/vector-icons';
 import Swipeable from 'react-native-swipeable-row';
 
+import { appointmentsApi } from '../utils/api';
+
 const HomeScreen = ({ navigation }) => {
 
     const [data, setData] = useState(null);
+
+    // useEffect(() => {
+    //     appointmentsApi.get()
+    //         .then(({ data }) => {
+    //             setData(data.data)
+    //     })
+    // }, []);
 
     return (
         <Container>
