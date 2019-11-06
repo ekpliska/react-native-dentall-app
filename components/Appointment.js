@@ -1,14 +1,20 @@
 import React from 'react';
 import { View } from 'react-native';
 import styled from 'styled-components/native';
+import getAvatarColor from '../utils/getAvatarColor';
 
 const Group = ({ navigate, item }) => {
-    const { user, diagnosis, active, time } = item;
+    const { patient, user, diagnosis, active, time } = item;
+    const colorAvatar = getAvatarColor(patient.fullname[0].toUpperCase());
     return (
         <GroupItem onPress={navigate.bind(this, 'Patient', item)}>
-            <Avatar source={{ uri: user.avatar }} />
+            <Avatar style={{ backgroundColor: colorAvatar.background}}>
+                <Letter style={{ color: colorAvatar.color }}>
+                    {patient.fullname[0].toUpperCase()}
+                </Letter>
+            </Avatar>
             <View style={{ flex: 1 }}>
-                <FullName>{user.fullname}</FullName>
+                <FullName>{patient.fullname}</FullName>
                 <GrayText>{diagnosis}</GrayText>
             </View>
             <GroupDate active={active}>{time}</GroupDate>
@@ -29,11 +35,18 @@ const GroupItem = styled.TouchableOpacity`
     border-bottom-color: #f3f3f3;
 `;
 
-const Avatar = styled.Image`
+const Avatar = styled.View`
     border-radius: 50px;
     width: 40px;
     height: 40px;
     margin-right: 15px;
+    align-items: center;
+    justify-content: center;
+`;
+
+const Letter = styled.Text`
+    font-size: 20px;
+    font-weight: bold;
 `;
 
 const FullName = styled.Text`

@@ -12,13 +12,21 @@ import { appointmentsApi } from '../utils/api';
 const HomeScreen = ({ navigation }) => {
 
     const [data, setData] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
-    // useEffect(() => {
-    //     appointmentsApi.get()
-    //         .then(({ data }) => {
-    //             setData(data.data)
-    //     })
-    // }, []);
+    const fetchAppointments = () => {
+        setIsLoading(true);
+        appointmentsApi.get()
+            .then(({ data }) => {
+                setData(data.data);
+                setIsLoading(false);
+            })
+            .catch(e => {
+                setIsLoading(false);
+            })
+    }
+
+    useEffect(fetchAppointments, []);
 
     return (
         <Container>
@@ -26,6 +34,8 @@ const HomeScreen = ({ navigation }) => {
                 <SectionList
                     sections={data}
                     keyExtractor={(item, index) => index}
+                    onRefresh={fetchAppointments}
+                    refreshing={isLoading}
                     renderItem={({ item }) => (
                         <Swipeable
                             rightButtons={[
