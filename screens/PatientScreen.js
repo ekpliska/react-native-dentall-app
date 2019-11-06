@@ -5,15 +5,16 @@ import Button from '../components/Button';
 import { Badge } from '../components/Badge';
 import { Foundation, Ionicons } from '@expo/vector-icons';
 
-const PatientScreen = ({ navigate }) => {
+const PatientScreen = ({ navigation }) => {
     return (
         <View style={{ flex: 1 }}>
             <PatientDetails>
                 <PatientFullName>
-                    {/* {navigate.getParam('user, {}').fullName} */}
-                    FullName
+                    {navigation.getParam('patient', {}).fullname}
                 </PatientFullName>
-                <GrayText>phone</GrayText>
+                <GrayText>
+                    {navigation.getParam('patient', {}).phone}
+                </GrayText>
             
                 <PatientButtons>
                     <FormulaButtonView>

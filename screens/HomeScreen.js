@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { SectionList } from 'react-native';
-import data from '../data';
 import styled from 'styled-components/native';
 import Appointment from '../components/Appointment';
 import SectionTitle from '../components/SectionTitle';
@@ -54,7 +53,7 @@ const HomeScreen = ({ navigation }) => {
                     )}
                 />
             }
-            <PlusButton>
+            <PlusButton onPress={navigation.navigate.bind(this, 'AddPatient')}>
                 <Ionicons name="ios-add" size={36} color="white" />
             </PlusButton>
         </Container>
