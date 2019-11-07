@@ -1,11 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text } from 'react-native';
 import styled from 'styled-components/native';
 import Button from '../components/Button';
 import { Badge } from '../components/Badge';
 import { Foundation, Ionicons } from '@expo/vector-icons';
+import { patientsApi } from '../utils/api';
 
 const PatientScreen = ({ navigation }) => {
+
+    const [appointmentList, setAppointmentList] = useState([]);
+
+    useEffect(() => {
+        const id = navigation.getParam('patient')._id;
+        
+        patientsApi.show(id)
+        .then(({ data }) => {
+            console.log('data', data);
+                setAppointmentList(data.data.appointments);
+            })
+    }, []);
+
     return (
         <View style={{ flex: 1 }}>
             <PatientDetails>
@@ -31,30 +45,37 @@ const PatientScreen = ({ navigation }) => {
 
             <PatientAppointments>
                 <Container>
-                    <AppointmentCard>
-                        <MoreButton>
-                            <Ionicons name="md-more" size={24} color="rgba(0, 0, 0, 0.4)" />
-                        </MoreButton>
+                    {
+                        appointmentList.map(appointment => {
+                            return (
+                                <AppointmentCard key={appointment._id}>
+                                    <MoreButton>
+                                        <Ionicons name="md-more" size={24} color="rgba(0, 0, 0, 0.4)" />
+                                    </MoreButton>
 
-                        <AppointmentCardRow>
-                            <Ionicons name="md-medical" size={16} color="#A3A3A3" />
-                            <AppointmentCardLabel>
-                                Зуб: <Text style={{ fontWeight: '600' }}>%number tooth</Text>
-                            </AppointmentCardLabel>
-                        </AppointmentCardRow>
+                                    <AppointmentCardRow>
+                                        <Ionicons name="md-medical" size={16} color="#A3A3A3" />
+                                        <AppointmentCardLabel>
+                                            Зуб: <Text style={{ fontWeight: '600' }}>{appointment.teethNumber}</Text>
+                                        </AppointmentCardLabel>
+                                    </AppointmentCardRow>
 
-                        <AppointmentCardRow>
-                            <Ionicons name="md-medical" size={16} color="#A3A3A3" />
-                            <AppointmentCardLabel>
-                                Диагноз: <Text style={{ fontWeight: '600' }}>%string</Text>
-                            </AppointmentCardLabel>
-                        </AppointmentCardRow>
+                                    <AppointmentCardRow>
+                                        <Ionicons name="md-medical" size={16} color="#A3A3A3" />
+                                        <AppointmentCardLabel>
+                                            Диагноз: <Text style={{ fontWeight: '600' }}>{appointment.diagnosis}</Text>
+                                        </AppointmentCardLabel>
+                                    </AppointmentCardRow>
 
-                        <AppointmentCardRow style={{ marginTop: 15, justifyContent: 'space-between' }}>
-                            <Badge color="active" text="11.10.2019 - 15:40" />
-                            <Badge color="green" text="1500 Р" />
-                        </AppointmentCardRow>
-                    </AppointmentCard>
+                                    <AppointmentCardRow style={{ marginTop: 15, justifyContent: 'space-between' }}>
+                                        <Badge color="active" text={`${appointment.date} - ${appointment.time}`} />
+                                        <Badge color="green" text={`${appointment.diagnosis} P.`} />
+                                    </AppointmentCardRow>
+                                </AppointmentCard>
+                            )
+                        })
+                    }
+                    
                 </Container>
             </PatientAppointments>
 
@@ -121,6 +142,7 @@ const AppointmentCard = styled.View`
   padding: 20px 25px;
   border-radius: 10px;
   background: white;
+  margin-bottom: 20px;
 `;
 
 const AppointmentCardLabel = styled.Text`
