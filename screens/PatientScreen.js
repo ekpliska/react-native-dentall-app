@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ActivityIndicator, Linking } from 'react-native';
 import styled from 'styled-components/native';
 import Button from '../components/Button';
 import { Badge } from '../components/Badge';
@@ -9,15 +9,19 @@ import { patientsApi } from '../utils/api';
 const PatientScreen = ({ navigation }) => {
 
     const [appointmentList, setAppointmentList] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const id = navigation.getParam('patient')._id;
-        
+
         patientsApi.show(id)
-        .then(({ data }) => {
-            console.log('data', data);
+            .then(({ data }) => {
+                console.log('data', data);
                 setAppointmentList(data.data.appointments);
+                setIsLoading(false);
             })
+            .catch((e) => setIsLoading(false))
+            .finally(() => setIsLoading(false))
     }, []);
 
     return (
@@ -29,13 +33,13 @@ const PatientScreen = ({ navigation }) => {
                 <GrayText>
                     {navigation.getParam('patient', {}).phone}
                 </GrayText>
-            
+
                 <PatientButtons>
                     <FormulaButtonView>
                         <Button>Формула зубов</Button>
                     </FormulaButtonView>
                     <PhoneButtonView>
-                        <Button color="#84D269">
+                        <Button color="#84D269" onPress={() => Linking.openURL(`tel: ${navigation.getParam('patient', {}).phone}`)}>
                             <Foundation name="telephone" size={22} color="white" />
                         </Button>
                     </PhoneButtonView>
@@ -46,36 +50,38 @@ const PatientScreen = ({ navigation }) => {
             <PatientAppointments>
                 <Container>
                     {
-                        appointmentList.map(appointment => {
-                            return (
-                                <AppointmentCard key={appointment._id}>
-                                    <MoreButton>
-                                        <Ionicons name="md-more" size={24} color="rgba(0, 0, 0, 0.4)" />
-                                    </MoreButton>
+                        isLoading
+                            ? <ActivityIndicator size="large" color="#2a85ff" />
+                            : appointmentList.map(appointment => {
+                                return (
+                                    <AppointmentCard key={appointment._id}>
+                                        <MoreButton>
+                                            <Ionicons name="md-more" size={24} color="rgba(0, 0, 0, 0.4)" />
+                                        </MoreButton>
 
-                                    <AppointmentCardRow>
-                                        <Ionicons name="md-medical" size={16} color="#A3A3A3" />
-                                        <AppointmentCardLabel>
-                                            Зуб: <Text style={{ fontWeight: '600' }}>{appointment.teethNumber}</Text>
-                                        </AppointmentCardLabel>
-                                    </AppointmentCardRow>
+                                        <AppointmentCardRow>
+                                            <Ionicons name="md-medical" size={16} color="#A3A3A3" />
+                                            <AppointmentCardLabel>
+                                                Зуб: <Text style={{ fontWeight: '600' }}>{appointment.teethNumber}</Text>
+                                            </AppointmentCardLabel>
+                                        </AppointmentCardRow>
 
-                                    <AppointmentCardRow>
-                                        <Ionicons name="md-medical" size={16} color="#A3A3A3" />
-                                        <AppointmentCardLabel>
-                                            Диагноз: <Text style={{ fontWeight: '600' }}>{appointment.diagnosis}</Text>
-                                        </AppointmentCardLabel>
-                                    </AppointmentCardRow>
+                                        <AppointmentCardRow>
+                                            <Ionicons name="md-medical" size={16} color="#A3A3A3" />
+                                            <AppointmentCardLabel>
+                                                Диагноз: <Text style={{ fontWeight: '600' }}>{appointment.diagnosis}</Text>
+                                            </AppointmentCardLabel>
+                                        </AppointmentCardRow>
 
-                                    <AppointmentCardRow style={{ marginTop: 15, justifyContent: 'space-between' }}>
-                                        <Badge color="active" text={`${appointment.date} - ${appointment.time}`} />
-                                        <Badge color="green" text={`${appointment.diagnosis} P.`} />
-                                    </AppointmentCardRow>
-                                </AppointmentCard>
-                            )
-                        })
+                                        <AppointmentCardRow style={{ marginTop: 15, justifyContent: 'space-between' }}>
+                                            <Badge color="active" text={`${appointment.date} - ${appointment.time}`} />
+                                            <Badge color="green" text={`${appointment.diagnosis} P.`} />
+                                        </AppointmentCardRow>
+                                    </AppointmentCard>
+                                )
+                            })
                     }
-                    
+
                 </Container>
             </PatientAppointments>
 
@@ -109,7 +115,7 @@ const PatientButtons = styled.View`
     flex-direction: row;
     margin-top: 20px;
 `;
-            
+
 const GrayText = styled.Text`
     font-size: 16px;
     color: #8b979f;
